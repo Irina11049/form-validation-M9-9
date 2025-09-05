@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/adaptive.css">
+</head>
+
+<body>
+    <header class="header">
+        <img src="img/logo.png" alt="">
+    </header>
+
+    <main class="main">
+        <form class="order" id="order">
+            <div class="order-title">
+                Get your free account
+            </div>
+            <div class="order-text">
+                Try homeWorks BUSINESS free for 15 days. Downgrade to Basic (Free Forever) anytime.
+            </div>
+
+            <div class="order-form">
+                <label for="full-name" class="order-form-label">Full Name</label>
+                <input type="text" class="order-form-input" id="full-name" placeholder="">
+                <label for="username" class="order-form-label">Your username</label>
+                <input type="text" class="order-form-input" id="username" placeholder="">
+                <label for="mail" class="order-form-label">E-mail</label>
+                <input type="email" class="order-form-input" id="mail" placeholder="">
+                <label for="password" class="order-form-label">Password</label>
+                <input type="password" class="order-form-input" id="password" placeholder="">
+                <label for="repeat-password" class="order-form-label">Repeat Password</label>
+                <input type="password" class="order-form-input" id="repeat-password" placeholder="">
+                <div class="checkbox" id="checkbox">
+                    <label for="checkbox" id="checkbox-label">Agree to our Terms of Service and Privacy Statement</label>
+                    <input type="checkbox" id="checkbox-input">
+                </div>
+
+            </div>
+
+            <div class="order-active">
+                <div class="order-active-btn">
+                    <button class="btn" id="button">Sign Up</button>
+                </div>
+                <a href="index.html" class="order-active-text">
+                    Already have an account?
+                </a>
+            </div>
+
+        </form>
+
+        <div class="main-img">
+            <img src="img/main-image.png" alt="">
+        </div>
+    </main>
+
+    <!--попап-->
+    <div class="popup" id="popup">
+        <div class="popup-text">
+            <p>На вашу почту выслана ссылка, перейдите по ней, чтобы завершить регистрацию</p>
+            <button class="btn popup-btn" id="popup-ok">ОК</button>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
