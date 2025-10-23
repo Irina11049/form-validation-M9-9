@@ -26,18 +26,24 @@
             <div class="order-form">
                 <label for="full-name" class="order-form-label">Full Name</label>
                 <input type="text" class="order-form-input" id="full-name" placeholder="">
+                <div class="error" id="error-full-name">Заполните поле Full Name</div>
                 <label for="username" class="order-form-label">Your username</label>
                 <input type="text" class="order-form-input" id="username" placeholder="">
+                <div class="error" id="error-username">Заполните поле Your username</div>
                 <label for="mail" class="order-form-label">E-mail</label>
                 <input type="email" class="order-form-input" id="mail" placeholder="">
+                <div class="error" id="error-mail">Заполните поле E-mail</div>
                 <label for="password" class="order-form-label">Password</label>
                 <input type="password" class="order-form-input" id="password" placeholder="">
+                <div class="error" id="error-password">Заполните поле Password</div>
                 <label for="repeat-password" class="order-form-label">Repeat Password</label>
                 <input type="password" class="order-form-input" id="repeat-password" placeholder="">
+                <div class="error" id="error-repeat-password">Пароли не совпадают</div>
                 <div class="checkbox" id="checkbox">
                     <label for="checkbox" id="checkbox-label">Agree to our Terms of Service and Privacy Statement</label>
                     <input type="checkbox" id="checkbox-input">
                 </div>
+                <div class="error checkbox" id="error-checkbox">Пожалуйста, подтвердите согласие с условиями</div>
 
             </div>
 
@@ -57,7 +63,6 @@
         </div>
     </main>
 
-    <!--попап-->
     <div class="popup" id="popup">
         <div class="popup-text">
             <p>На вашу почту выслана ссылка, перейдите по ней, чтобы завершить регистрацию</p>
@@ -65,6 +70,7 @@
         </div>
     </div>
 
+    <script src="scripts/config.js"></script>
     <script src="scripts/script.js"></script>
 </body>
 
