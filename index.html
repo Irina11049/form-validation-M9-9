@@ -1,77 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Works</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/adaptive.css" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/adaptive.css">
-</head>
-
-<body>
+  <body>
     <header class="header">
-        <img src="img/logo.png" alt="">
+      <img src="img/logo.png" alt="" />
     </header>
 
     <main class="main">
-        <form class="order" id="order">
-            <div class="order-title">
-                Get your free account
-            </div>
-            <div class="order-text">
-                Try homeWorks BUSINESS free for 15 days. Downgrade to Basic (Free Forever) anytime.
-            </div>
-
-            <div class="order-form">
-                <label for="full-name" class="order-form-label">Full Name</label>
-                <input type="text" class="order-form-input" id="full-name" placeholder="">
-                <div class="error" id="error-full-name">Заполните поле Full Name</div>
-                <label for="username" class="order-form-label">Your username</label>
-                <input type="text" class="order-form-input" id="username" placeholder="">
-                <div class="error" id="error-username">Заполните поле Your username</div>
-                <label for="mail" class="order-form-label">E-mail</label>
-                <input type="email" class="order-form-input" id="mail" placeholder="">
-                <div class="error" id="error-mail">Заполните поле E-mail</div>
-                <label for="password" class="order-form-label">Password</label>
-                <input type="password" class="order-form-input" id="password" placeholder="">
-                <div class="error" id="error-password">Заполните поле Password</div>
-                <label for="repeat-password" class="order-form-label">Repeat Password</label>
-                <input type="password" class="order-form-input" id="repeat-password" placeholder="">
-                <div class="error" id="error-repeat-password">Пароли не совпадают</div>
-                <div class="checkbox" id="checkbox">
-                    <label for="checkbox" id="checkbox-label">Agree to our Terms of Service and Privacy Statement</label>
-                    <input type="checkbox" id="checkbox-input">
-                </div>
-                <div class="error checkbox" id="error-checkbox">Пожалуйста, подтвердите согласие с условиями</div>
-
-            </div>
-
-            <div class="order-active">
-                <div class="order-active-btn">
-                    <button class="btn" id="button">Sign Up</button>
-                </div>
-                <a href="index.html" class="order-active-text">
-                    Already have an account?
-                </a>
-            </div>
-
-        </form>
-
-        <div class="main-img">
-            <img src="img/main-image.png" alt="">
+      <form class="order" id="order">
+        <div class="order-title">Get your free account</div>
+        <div class="order-text">
+          Try homeWorks BUSINESS free for 15 days. Downgrade to Basic (Free
+          Forever) anytime.
         </div>
+
+        <div class="order-form">
+          <label class="order-form-label remove" id="full-name"
+            >Full Name
+            <input
+              type="text"
+              class="order-form-input"
+            />
+            <span class="error" id="error-full-name"
+              >Заполните поле Full Name</span
+            >
+          </label>
+
+          <label class="order-form-label" id="username"
+            >Your username
+            <input
+              type="text"
+              class="order-form-input"
+            />
+            <span class="error" id="error-username"
+              >Заполните поле Your username</span
+            >
+          </label>
+
+          <label class="order-form-label remove" id="mail"
+            >E-mail
+            <input
+              type="email"
+              class="order-form-input"
+            />
+            <span class="error" id="error-mail">Заполните поле E-mail</span>
+          </label>
+
+          <label class="order-form-label" id="password"
+            >Password
+            <input
+              type="password"
+              class="order-form-input"
+            />
+            <span class="error" id="error-password"
+              >Заполните поле Password</span
+            >
+          </label>
+
+          <label class="order-form-label remove" id="repeat-password"
+            >Repeat Password
+            <input
+              type="password"
+              class="order-form-input"
+            />
+            <span class="error" id="error-repeat-password"
+              >Пароли не совпадают</span
+            >
+          </label>
+
+          <label id="checkbox-label remove">
+            <input type="checkbox" id="checkbox-input" />
+            Agree to our Terms of Service and Privacy Statement
+            <span class="error checkbox" id="error-checkbox"
+              >Пожалуйста, подтвердите согласие с условиями</span
+            >
+          </label>
+        </div>
+
+        <div class="order-active">
+          <div class="order-active-btn">
+            <button class="btn" id="button">Sign Up</button>
+          </div>
+          <a href="index.html" class="order-active-text">
+            Already have an account?
+          </a>
+        </div>
+      </form>
+
+      <div class="main-img">
+        <img src="img/main-image.png" alt="" />
+      </div>
     </main>
 
     <div class="popup" id="popup">
-        <div class="popup-text">
-            <p>На вашу почту выслана ссылка, перейдите по ней, чтобы завершить регистрацию</p>
-            <button class="btn popup-btn" id="popup-ok">ОК</button>
-        </div>
+      <div class="popup-text">
+        <p>
+          На вашу почту выслана ссылка, перейдите по ней, чтобы завершить
+          регистрацию
+        </p>
+        <button class="btn popup-btn" id="popup-ok">ОК</button>
+      </div>
     </div>
 
     <script src="scripts/config.js"></script>
     <script src="scripts/script.js"></script>
-</body>
-
+  </body>
 </html>

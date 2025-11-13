@@ -57,6 +57,7 @@ body {
 }
 
 .order-form-label {
+    position: relative;
     display: block;
     color: #C6C6C4;
     font-size: 16px;
@@ -143,10 +144,21 @@ input [type="checkbox"] {
 }
 
 .error {
+    position: absolute;
+    top: 100%;
+    left: 0;
     display: none;
     margin-top: -20px;
     font-size: 14px;
     color: tomato;
+}
+
+.label-error {
+    border-color: tomato;
+}
+
+.label-error .error {
+        display: inline;
 }
 
 .error.checkbox {
