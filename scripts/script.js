@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Элементы формы
-  const form = document.getElementById('order')
-
   // Input элементы
   const fullNameInput = document.querySelector('#full-name input')
   const usernameInput = document.querySelector('#username input')
@@ -9,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const passwordInput = document.querySelector('#password input')
   const repeatPasswordInput = document.querySelector('#repeat-password input')
   const checkboxInput = document.getElementById('checkbox-input')
+  const form = document.getElementById('order')
 
-  // Контейнеры полей (label)
+  // Label элементы
   const fullNameLabel = document.getElementById('full-name')
   const usernameLabel = document.getElementById('username')
   const mailLabel = document.getElementById('mail')
@@ -37,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const regexUsername = /^[A-Za-z0-9_-]+$/
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   const regexPassword =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={};':"\\|,.<>\/?]).{8,}$/
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={};':"\\|,.<>/?]).{8,}$/
 
   // Состояние формы
   let isLoginMode = false
@@ -46,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeEventListeners()
 
   function initializeEventListeners () {
-    // Блокировка цифр в поле Full Name
     if (fullNameInput) {
       fullNameInput.addEventListener('keypress', function (event) {
         if (event.key >= '0' && event.key <= '9') {
@@ -56,36 +53,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Обработчики ввода для скрытия ошибок
-    if (fullNameInput) {
-      fullNameInput.addEventListener('input', function () {
-        hideError(fullNameLabel)
-      })
-    }
+    const inputs = [
+      { input: fullNameInput, label: fullNameLabel },
+      { input: usernameInput, label: usernameLabel },
+      { input: mailInput, label: mailLabel },
+      { input: passwordInput, label: passwordLabel },
+      { input: repeatPasswordInput, label: repeatPasswordLabel }
+    ]
 
-    if (usernameInput) {
-      usernameInput.addEventListener('input', function () {
-        hideError(usernameLabel)
-      })
-    }
-
-    if (mailInput) {
-      mailInput.addEventListener('input', function () {
-        hideError(mailLabel)
-      })
-    }
-
-    if (passwordInput) {
-      passwordInput.addEventListener('input', function () {
-        hideError(passwordLabel)
-        hideError(repeatPasswordLabel)
-      })
-    }
-
-    if (repeatPasswordInput) {
-      repeatPasswordInput.addEventListener('input', function () {
-        hideError(repeatPasswordLabel)
-      })
-    }
+    inputs.forEach(({ input, label }) => {
+      if (input) {
+        input.addEventListener('input', function () {
+          hideError(label)
+        })
+      }
+    })
 
     if (checkboxInput) {
       checkboxInput.addEventListener('change', function () {
@@ -95,9 +77,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Вспомогательные функции для ошибок
-  function showError (labelElement, errorElement) {
+  function showError (labelElement, errorElement, errorText) {
     if (!labelElement || !errorElement) return
 
+    errorElement.textContent = errorText
     errorElement.style.display = 'block'
     labelElement.classList.add('label-error')
   }
@@ -105,11 +88,36 @@ document.addEventListener('DOMContentLoaded', function () {
   function hideError (labelElement) {
     if (!labelElement) return
 
-    const errorElement = labelElement.querySelector('.error')
+    labelElement.classList.remove('label-error')
+
+    let errorElement
+    switch (labelElement.id) {
+      case 'full-name':
+        errorElement = errorFullName
+        break
+      case 'username':
+        errorElement = errorUsername
+        break
+      case 'mail':
+        errorElement = errorMail
+        break
+      case 'password':
+        errorElement = errorPassword
+        break
+      case 'repeat-password':
+        errorElement = errorRepeatPassword
+        break
+      case 'checkbox-label':
+        errorElement = errorCheckbox
+        break
+      default:
+        return
+    }
+
     if (errorElement) {
+      errorElement.textContent = ''
       errorElement.style.display = 'none'
     }
-    labelElement.classList.remove('label-error')
   }
 
   function clearAllErrors () {
@@ -126,102 +134,101 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  // Функции валидации
+  // Валидация отдельных полей
   function validateFullName () {
-    if (!fullNameInput || !fullNameLabel || !errorFullName) return true
-
     const value = fullNameInput.value.trim()
     if (!value) {
-      showError(fullNameLabel, errorFullName)
-      errorFullName.textContent = 'Заполните поле Full Name'
+      showError(fullNameLabel, errorFullName, 'Заполните поле Full Name')
       return false
     }
     if (!regexFullName.test(value)) {
-      showError(fullNameLabel, errorFullName)
-      errorFullName.textContent =
+      showError(
+        fullNameLabel,
+        errorFullName,
         'Full Name может содержать только буквы и пробел'
+      )
       return false
     }
     return true
   }
 
   function validateUsername () {
-    if (!usernameInput || !usernameLabel || !errorUsername) return true
-
     const value = usernameInput.value.trim()
     if (!value) {
-      showError(usernameLabel, errorUsername)
-      errorUsername.textContent = 'Заполните поле Your username'
+      showError(usernameLabel, errorUsername, 'Заполните поле Your username')
       return false
     }
     if (!regexUsername.test(value)) {
-      showError(usernameLabel, errorUsername)
-      errorUsername.textContent =
-        'Your username может содержать только буквы, цифры, _ и -'
+      showError(
+        usernameLabel,
+        errorUsername,
+        'Username может содержать только буквы, цифры, подчеркивание и тире'
+      )
       return false
     }
     return true
   }
 
   function validateEmail () {
-    if (!mailInput || !mailLabel || !errorMail) return true
-
     const value = mailInput.value.trim()
     if (!value) {
-      showError(mailLabel, errorMail)
-      errorMail.textContent = 'Заполните поле E-mail'
+      showError(mailLabel, errorMail, 'Заполните поле E-mail')
       return false
     }
     if (!regexEmail.test(value)) {
-      showError(mailLabel, errorMail)
-      errorMail.textContent = 'Некорректный формат E-mail'
+      showError(mailLabel, errorMail, 'Введите корректный E-mail')
       return false
     }
     return true
   }
 
   function validatePassword () {
-    if (!passwordInput || !passwordLabel || !errorPassword) return true
-
     const value = passwordInput.value
     if (!value) {
-      showError(passwordLabel, errorPassword)
-      errorPassword.textContent = 'Заполните поле Password'
+      showError(passwordLabel, errorPassword, 'Заполните поле Password')
+      return false
+    }
+    if (value.length < 8) {
+      showError(
+        passwordLabel,
+        errorPassword,
+        'Пароль должен содержать минимум 8 символов'
+      )
       return false
     }
     if (!regexPassword.test(value)) {
-      showError(passwordLabel, errorPassword)
-      errorPassword.textContent =
-        'Пароль должен быть минимум 8 символов, содержать минимум одну заглавную букву, цифру и спецсимвол'
+      showError(
+        passwordLabel,
+        errorPassword,
+        'Пароль должен содержать хотя бы одну заглавную букву, одну цифру и один спецсимвол'
+      )
       return false
     }
     return true
   }
 
   function validateRepeatPassword () {
-    if (!repeatPasswordInput || !repeatPasswordLabel || !errorRepeatPassword)
-      return true
+    const passwordValue = passwordInput.value
+    const repeatValue = repeatPasswordInput.value
 
-    const value = repeatPasswordInput.value
-    if (!value) {
-      showError(repeatPasswordLabel, errorRepeatPassword)
-      errorRepeatPassword.textContent = 'Подтвердите пароль'
+    if (!repeatValue) {
+      showError(repeatPasswordLabel, errorRepeatPassword, 'Повторите пароль')
       return false
     }
-    if (passwordInput && value !== passwordInput.value) {
-      showError(repeatPasswordLabel, errorRepeatPassword)
-      errorRepeatPassword.textContent = 'Пароли не совпадают'
+    if (passwordValue !== repeatValue) {
+      showError(repeatPasswordLabel, errorRepeatPassword, 'Пароли не совпадают')
       return false
     }
     return true
   }
 
   function validateCheckbox () {
-    if (!checkboxInput || !checkboxLabel || !errorCheckbox) return true
-
     if (!checkboxInput.checked) {
-      showError(checkboxLabel, errorCheckbox)
-      errorCheckbox.textContent = 'Пожалуйста, подтвердите согласие'
+      showError(
+        checkboxLabel,
+        errorCheckbox,
+        'Вы должны согласиться с условиями'
+      )
       return false
     }
     return true
@@ -250,44 +257,96 @@ document.addEventListener('DOMContentLoaded', function () {
   function validateLoginForm () {
     clearAllErrors()
 
-    const isUsernameValid = validateUsername()
-    const isPasswordValid = validatePassword()
+    const username = usernameInput.value.trim()
+    const password = passwordInput.value
+    let isValid = true
 
-    return isUsernameValid && isPasswordValid
+    // Проверка заполнения полей
+    if (!username) {
+      showError(usernameLabel, errorUsername, 'Заполните поле Your username')
+      isValid = false
+    }
+
+    if (!password) {
+      showError(passwordLabel, errorPassword, 'Заполните поле Password')
+      isValid = false
+    }
+
+    if (!isValid) return false
+
+    // Проверка пользователя в Local Storage
+    const clients = JSON.parse(localStorage.getItem('clients')) || []
+    const user = clients.find(
+      u => u.username === username || u.email === username
+    )
+
+    if (!user) {
+      showError(
+        usernameLabel,
+        errorUsername,
+        'Такой пользователь не зарегистрирован'
+      )
+      return false
+    }
+
+    if (user.password !== password) {
+      showError(passwordLabel, errorPassword, 'Неверный пароль')
+      return false
+    }
+
+    return true
   }
 
   // Обработчик отправки формы
-  form.addEventListener('submit', function (event) {
-    event.preventDefault()
+  if (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault()
 
-    if (isLoginMode) {
-      if (validateLoginForm()) {
-        handleLogin()
+      let isValid = false
+
+      if (isLoginMode) {
+        isValid = validateLoginForm()
+        if (isValid) {
+          handleLogin()
+        }
+      } else {
+        isValid = validateRegistrationForm()
+        if (isValid) {
+          handleRegistration()
+        }
       }
-    } else {
-      if (validateRegistrationForm()) {
-        handleRegistration()
-      }
-    }
-  })
+    })
+  }
 
   function handleRegistration () {
     // Создаём пользователя
     const user = {
-      fullName: fullNameInput ? fullNameInput.value.trim() : '',
-      username: usernameInput ? usernameInput.value.trim() : '',
-      email: mailInput ? mailInput.value.trim() : '',
-      password: passwordInput ? passwordInput.value : ''
+      fullName: fullNameInput.value.trim(),
+      username: usernameInput.value.trim(),
+      email: mailInput.value.trim(),
+      password: passwordInput.value
     }
 
     // Проверка уникальности
     let clients = JSON.parse(localStorage.getItem('clients')) || []
-    const exists = clients.some(
-      u => u.email === user.email || u.username === user.username
-    )
+    const emailExists = clients.some(u => u.email === user.email)
+    const usernameExists = clients.some(u => u.username === user.username)
 
-    if (exists) {
-      alert('Пользователь с таким email или username уже зарегистрирован.')
+    if (emailExists) {
+      showError(
+        mailLabel,
+        errorMail,
+        'Пользователь с таким email уже зарегистрирован'
+      )
+      return
+    }
+
+    if (usernameExists) {
+      showError(
+        usernameLabel,
+        errorUsername,
+        'Пользователь с таким username уже зарегистрирован'
+      )
       return
     }
 
@@ -295,27 +354,21 @@ document.addEventListener('DOMContentLoaded', function () {
     clients.push(user)
     localStorage.setItem('clients', JSON.stringify(clients))
 
-    // Показ модального окна
     showPopup()
+
+    form.reset()
   }
 
   function handleLogin () {
-    const username = usernameInput ? usernameInput.value.trim() : ''
-    const password = passwordInput ? passwordInput.value : ''
-
-    // Проверка учетных данных
-    let clients = JSON.parse(localStorage.getItem('clients')) || []
+    const username = usernameInput.value.trim()
+    const clients = JSON.parse(localStorage.getItem('clients')) || []
     const user = clients.find(
-      u =>
-        (u.username === username || u.email === username) &&
-        u.password === password
+      u => u.username === username || u.email === username
     )
 
     if (user) {
       alert(`Добро пожаловать, ${user.fullName || user.username}!`)
       form.reset()
-    } else {
-      alert('Неверное имя пользователя или пароль.')
     }
   }
 
@@ -333,13 +386,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Функция для перехода на страницу логина
   function switchToLogin () {
     isLoginMode = true
     formTitle.textContent = 'Log in to the system'
     submitButton.textContent = 'Sign In'
 
-    // Скрываем поля регистрации (элементы с классом remove)
+    // Скрываем поля регистрации
     const elementsToRemove = document.querySelectorAll('.remove')
     elementsToRemove.forEach(element => {
       element.style.display = 'none'
@@ -347,9 +399,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (linkAlreadyHaveAccount) {
       linkAlreadyHaveAccount.textContent = 'Registration'
+      linkAlreadyHaveAccount.href = '#'
     }
 
     clearAllErrors()
+    form.reset()
   }
 
   function switchToRegistration () {
@@ -365,9 +419,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (linkAlreadyHaveAccount) {
       linkAlreadyHaveAccount.textContent = 'Already have an account?'
+      linkAlreadyHaveAccount.href = '#'
     }
 
     clearAllErrors()
+    form.reset()
   }
 
   // Обработчики событий
@@ -388,4 +444,6 @@ document.addEventListener('DOMContentLoaded', function () {
       switchToLogin()
     })
   }
+
+  clearAllErrors()
 })

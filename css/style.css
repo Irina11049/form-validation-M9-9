@@ -79,6 +79,7 @@ body {
 
 .checkbox {
     display: flex;
+    cursor: pointer;
 }
 
 .checkbox label {
@@ -92,6 +93,10 @@ body {
 input [type="checkbox"] {
     display: inline-block;
     order: 1;
+}
+
+#checkbox-label {
+    cursor: pointer;
 }
 
 .order-active {
@@ -144,16 +149,13 @@ input [type="checkbox"] {
 }
 
 .error {
-    position: absolute;
-    top: 100%;
-    left: 0;
     display: none;
     margin-top: -20px;
     font-size: 14px;
     color: tomato;
 }
 
-.label-error {
+.label-error .order-form-input {
     border-color: tomato;
 }
 
@@ -164,3 +166,4 @@ input [type="checkbox"] {
 .error.checkbox {
     margin-top: 0;
 }
+
