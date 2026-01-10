@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Валидация отдельных полей
+  
   function validateFullName () {
     const value = fullNameInput.value.trim()
     if (!value) {
@@ -151,6 +152,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     return true
   }
+
+  fullNameInput.addEventListener('input', () => {
+    if (validateFullName()) {
+      fullNameLabel.classList.add('valid')
+    } else {
+      fullNameLabel.classList.remove('valid')
+    }
+  })
 
   function validateUsername () {
     const value = usernameInput.value.trim()
@@ -169,8 +178,18 @@ document.addEventListener('DOMContentLoaded', function () {
     return true
   }
 
+  usernameInput.addEventListener('input', () => {
+    if (validateUsername()) {
+      usernameLabel.classList.add('valid')
+    } else {
+      usernameLabel.classList.remove('valid')
+    }
+  })
+
   function validateEmail () {
+    console.log('validateEmail вызван')
     const value = mailInput.value.trim()
+    console.log('Value:', value)
     if (!value) {
       showError(mailLabel, errorMail, 'Заполните поле E-mail')
       return false
@@ -179,8 +198,18 @@ document.addEventListener('DOMContentLoaded', function () {
       showError(mailLabel, errorMail, 'Введите корректный E-mail')
       return false
     }
+    console.log('Email валиден')
     return true
   }
+
+    mailInput.addEventListener('input', () => {
+    if (validateEmail()) {
+      mailInput.classList.add('valid')
+      console.log(mailInput.className);
+    } else {
+      mailInput.classList.remove('valid')
+    }
+  })
 
   function validatePassword () {
     const value = passwordInput.value
@@ -200,12 +229,20 @@ document.addEventListener('DOMContentLoaded', function () {
       showError(
         passwordLabel,
         errorPassword,
-        'Пароль должен содержать хотя бы одну заглавную букву, одну цифру и один спецсимвол'
+        'Пароль должен содержать: заглавную букву, цифру и спецсимвол'
       )
       return false
     }
     return true
   }
+
+  passwordInput.addEventListener('input', () => {
+    if (validatePassword()) {
+      passwordInput.classList.add('valid')
+    } else {
+      passwordInput.classList.remove('valid')
+    }
+  })
 
   function validateRepeatPassword () {
     const passwordValue = passwordInput.value
@@ -221,6 +258,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     return true
   }
+
+  repeatPasswordInput.addEventListener('input', () => {
+    if (validateRepeatPassword()) {
+      repeatPasswordInput.classList.add('valid')
+    } else {
+      repeatPasswordInput.classList.remove('valid')
+    }
+  })
 
   function validateCheckbox () {
     if (!checkboxInput.checked) {
@@ -365,10 +410,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const user = clients.find(
       u => u.username === username || u.email === username
     )
-
     if (user) {
-      alert(`Добро пожаловать, ${user.fullName || user.username}!`)
-      form.reset()
+      // Получаем полное имя (fullName)
+      const fullName = user.fullName || user.username
+
+      // Заменяем заголовок
+      if (formTitle) {
+        formTitle.textContent = `Welcome, ${fullName}!`
+      }
+
+      // Заменяем кнопку
+      if (submitButton) {
+        submitButton.textContent = 'Exit'
+
+        const newButton = submitButton.cloneNode(true)
+        submitButton.replaceWith(newButton)
+
+        newButton.addEventListener('click', () => {
+          location.reload()
+        })
+      }
+
+      const elementsToHide = document.querySelectorAll('.order-form-label')
+      elementsToHide.forEach(el => {
+        el.classList.add('hide-on-login')
+      })
     }
   }
 

@@ -160,10 +160,21 @@ input [type="checkbox"] {
 }
 
 .label-error .error {
-        display: inline;
+    display: inline;
 }
 
 .error.checkbox {
     margin-top: 0;
 }
 
+.hide-on-login {
+    display: none;
+}
+
+.valid .order-form-input {
+    border-color: green;
+}
+
+.valid {
+    border-color: green;
+}
